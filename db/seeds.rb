@@ -7,7 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # Create a main sample user.
 # 
-User.create!(name: "Example User",
+User.find_or_create_by!(name: "Example User",
               email: "example@railstutorial.org",
               password:"foobar",
               password_confirmation: "foobar",
@@ -20,7 +20,7 @@ User.create!(name: "Example User",
   name = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
   password = "password"
-  User.create!(name: name,
+  User.find_or_create_by!(name: name,
                 email: email,
                 password: password,
                 password_confirmation: password,
@@ -33,7 +33,7 @@ users = User.order(:created_at).take(6)
 
 50.times do
 content = Faker::Lorem.sentence(word_count: 5)
-users.each { |user| user.microposts.create!(content: content) }
+users.each { |user| user.microposts.find_or_create_by!(content: content) }
 end
 
 # Create following relationships.
