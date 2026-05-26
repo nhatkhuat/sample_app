@@ -7,25 +7,27 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # Create a main sample user.
 # 
-User.find_or_create_by!(name: "Example User",
-              email: "example@railstutorial.org",
-              password:"foobar",
-              password_confirmation: "foobar",
-              admin: true,
-              activated: true,
-              activated_at: Time.zone.now)
+User.find_or_create_by!(email: "example@railstutorial.org") do |user|
+  user.name = "Example User"
+  user.password = "foobar"
+  user.password_confirmation = "foobar"
+  user.admin = true
+  user.activated = true
+  user.activated_at = Time.zone.now
+end
 
 # Generate a bunch of additional users.
 99.times do |n|
   name = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
   password = "password"
-  User.find_or_create_by!(name: name,
-                email: email,
-                password: password,
-                password_confirmation: password,
-                activated: true,
-                activated_at: Time.zone.now)
+    User.find_or_create_by!(email: email) do |user|
+    user.name = name
+    user.password = password
+    user.password_confirmation = password
+    user.activated = true
+    user.activated_at = Time.zone.now
+  end
 end
 
 # Generate microposts for a subset of users.
@@ -41,5 +43,10 @@ users = User.all
 user  = users.first
 following = users[2..50]
 followers = users[3..40]
-following.each { |followed| user.follow(followed) }
-followers.each { |follower| follower.follow(user) }
+following.each do |followed|
+  user.following << followed unless user.following.include?(followed)
+end
+
+followers.each do |follower|
+  follower.following << user unless follower.following.include?(user)
+end
