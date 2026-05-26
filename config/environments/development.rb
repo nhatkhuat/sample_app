@@ -37,11 +37,25 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   host = "localhost:3000"
 
   config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+
+  host = 'sample-app-8ar8.onrender.com'
+  ActionMailer::Base.smtp_settings = {
+    :address => 'smtp.sendgrid.net',
+    :port => '587',
+    :authentication => :plain,
+    :user_name => 'apikey',
+    :password => ENV['SENDGRID_API_KEY'],
+    :domain => 'onrender.com',
+    :enable_starttls_auto => true,
+    :debug_output   => $stdout
+  }
 
   config.action_mailer.perform_caching = false
 

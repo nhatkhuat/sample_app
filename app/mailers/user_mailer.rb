@@ -21,4 +21,10 @@ class UserMailer < ApplicationMailer
 
     mail to: user.email, subject: "Password reset"
   end
+
+  def test_email(to_email)
+    mail(to: to_email, subject: "Test email") do |format|
+      format.text { render plain: "This is a test email from Sample App." }
+    end
+  end
 end
