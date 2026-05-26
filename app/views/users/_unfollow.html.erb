@@ -1,0 +1,5 @@
+<% user ||= @user %>
+    <%= form_with(model: current_user.active_relationships.find_by(followed: user), 
+                  method: :delete, data: { turbo_stream: true }) do |f| %>
+        <%= f.submit "Unfollow", class: "btn" %>
+    <% end %>

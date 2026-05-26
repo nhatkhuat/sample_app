@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: "Orange you glad I didn't say banana?"
+  user: michael
+
+two:
+  content: "Writing a new post!"
+  user: archer
